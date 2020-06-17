@@ -1,5 +1,9 @@
 # Twitch VOD Playlist
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/bosam/twitch-vod-playlist/master/src/electron-app/icon.png" alt="Twitch VOD Playlist" width="50" />
+</p>
+
 Twitch VOD Playlist is a very simple Electron app made to list a streamer's videos-on-demand and call a script with the url's location as its first parameter.
 
 This project uses as base [Electron-vue-boilerplate](https://github.com/oliverfindl/electron-vue-boilerplate).
@@ -31,6 +35,10 @@ I currently am using a script that calls for streamlink and open Media Player Cl
 
 **Application Setup**
 --
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/bosam/twitch-vod-playlist/master/assets/settings.png" alt="Settings" />
+</p>
 
 In order to properly contact Twitch API, you need to create a ClientID/Client Secret credentials that you will set in the application.
 
