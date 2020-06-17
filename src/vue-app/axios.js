@@ -3,10 +3,9 @@ import { stringify } from 'qs';
 import SettingsService from './services/settings.service';
 
 let settings;
-let bridge = this;
-SettingsService.load().then(settings => {
-    console.log('Loaded with success', settings);
-    bridge.settings = settings;
+SettingsService.load().then(settingsObj => {
+    console.log('Loaded with success', settingsObj);
+    settings = settingsObj;
 });
 
 let accessToken = '';
