@@ -1,18 +1,18 @@
 "use strict";
 
-const { resolve } = require("path");
-const { readdirSync } = require("fs");
+const { resolve } = require('path');
+const { readdirSync } = require('fs');
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const nodeModules = {};
-readdirSync("node_modules").filter(mods => ![".bin", ".cache"].includes(mods)).forEach(mod => nodeModules[mod] = `require("${mod}")`);
+readdirSync('node_modules').filter(mods => !['.bin', '.cache'].includes(mods)).forEach(mod => nodeModules[mod] = `require("${mod}")`);
 
 module.exports = {
 	mode: process.env.NODE_ENV,
-	target: "electron-main",
-	entry: resolve(__dirname, "src/electron-app/main.js"),
+	target: 'electron-main',
+	entry: resolve(__dirname, 'src/electron-app/main.js'),
 	output: {
-		path: resolve(__dirname, "dist/electron-app/")
+		path: resolve(__dirname, 'dist/electron-app/')
 	},
 	externals: nodeModules,
 	node: {
@@ -46,7 +46,7 @@ module.exports = {
 		}]
 	},
 	plugins: [
-		new CleanWebpackPlugin()
+        new CleanWebpackPlugin()
 	],
 	resolve: {
 		extensions: [".js", ".mjs", ".json"],

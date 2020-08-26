@@ -11,7 +11,7 @@ const windowStateKeeper = require('electron-window-state');
 let mainWindow;
 let isDev = 'development' === process.env.NODE_ENV;
 
-function createWindow() {
+async function createWindow() {
     // Load the previous state with fallback to defaults
     let mainWindowState = windowStateKeeper({
         defaultWidth: 800,
@@ -34,7 +34,7 @@ function createWindow() {
     mainWindow.setMenu(null);
 
     // Load the index.html of the app.
-    mainWindow.loadURL(isDev ? format({
+    await mainWindow.loadURL(isDev ? format({
         hostname: 'localhost',
         pathname: 'index.html',
         protocol: 'http',
@@ -49,7 +49,6 @@ function createWindow() {
     // Open the DevTools.
     if (isDev) {
         mainWindow.webContents.openDevTools();
-        require('devtron').install();
         require('vue-devtools').install();
     }
 
