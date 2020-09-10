@@ -1,30 +1,44 @@
 <template>
-    <div>
-        <h6 v-if="list.length">{{ list.length }} videos ( {{ channelNameProcessed }} )</h6>
+  <div>
+    <h6 v-if="list.length">
+      {{ list.length }} videos ( {{ channelNameProcessed }} )
+    </h6>
 
-        <ul class="fa-ul">
-            <li v-for="video in list" :key="video.id">
-                <span class="fa-li">
-                    <font-awesome-icon icon="angle-right"></font-awesome-icon>
-                </span>
-                <div class="float-right small">
-                    <span :title="createdAtRaw(video.created_at)" v-html="createdAtFromNow(video.created_at)"></span>
-                </div>
-                <a :href="video.url" v-html="parseTitle(video.title)" @click="spawnMedia(video.url, $event)"></a>
-                <span class="small">( {{ video.duration }} )</span>
-            </li>
-        </ul>
-    </div>
+    <ul class="fa-ul">
+      <li
+        v-for="video in list"
+        :key="video.id"
+      >
+        <span class="fa-li">
+          <font-awesome-icon icon="angle-right" />
+        </span>
+        <div class="float-right small">
+          <span
+            :title="createdAtRaw(video.created_at)"
+          >{{ createdAtFromNow(video.created_at) }}</span>
+        </div>
+        <a
+          :href="video.url"
+          @click="spawnMedia(video.url, $event)"
+        >{{ parseTitle(video.title) }}</a>
+        <span class="small">( {{ video.duration }} )</span>
+      </li>
+    </ul>
+  </div>
 </template>
 
-<script>
+<script type="ts">
 /* eslint-disable indent */
+    import Vue from 'vue';
     import moment from 'moment-timezone';
     import SpawnService from '../services/spawn.service';
 
-    export default {
+    export default Vue.extend({
         name: 'VideoList',
-        props: ['list', 'channelName'],
+        props: [
+            'list',
+            'channelName'
+        ],
         data: () => {
             return {
                 channelNameProcessed: ''
@@ -57,7 +71,7 @@
                 SpawnService.spawnMedia(url);
             }
         }
-    };
+    });
 </script>
 
 <style>

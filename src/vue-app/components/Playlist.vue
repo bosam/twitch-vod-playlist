@@ -1,24 +1,23 @@
 <template>
-    <div>
-        <quick-search />
-        <search />
-    </div>
+  <div>
+    <quick-search />
+    <search />
+  </div>
 </template>
 
-<script>
+<script type="ts">
 /* eslint-disable indent */
-    'use strict';
-
+    import Vue from 'vue';
     import QuickSearch from './QuickSearch';
     import Search from './Search';
 
-    export default {
+    export default Vue.extend({
         name: 'Home',
         components: {
             QuickSearch,
             Search
         }
-    };
+    });
 </script>
 
 <style>

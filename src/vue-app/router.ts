@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Playlist from './components/Playlist';
-import Settings from './components/Settings';
+import Playlist from './components/Playlist.vue';
+import Settings from './components/Settings.vue';
 
 Vue.use(Router);
 

@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "removeComments": false,
+        "noImplicitAny": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": ["node_modules"],
+    "include": [
+        "src/**/*"
+    ],
+    "files": ["src/vue-app/vue-shim.d.ts"]
+}

@@ -1,8 +1,13 @@
 import storage from 'electron-storage';
 
 class SettingsService {
+    settings: unknown;
+    previousSettings: unknown;
+    HAS_LOADED: boolean;
+    defaultSettings: { channels: { channel: string; id: number; label: string }[]; credentials: { client_secret: string; client_id: string }; paths: { script: string } };
+    private FILENAME = 'settings';
+
     constructor() {
-        this.FILENAME = 'settings';
         this.defaultSettings = {
             'credentials' : {
                 'client_id': '',
@@ -27,23 +32,21 @@ class SettingsService {
     }
 
     loadFile() {
-        let bridge = this;
         if (!storage.isPathExists(this.FILENAME)) {
             return this.init().then(() => {
-                return bridge.defaultSettings;
+                return this.defaultSettings;
             });
         }
 
         return storage.get(this.FILENAME).then(settings => {
-            console.log(settings);
-            bridge.HAS_LOADED = true;
-            bridge.settings = settings;
-            bridge.previousSettings = this._clone(settings);
+            this.HAS_LOADED = true;
+            this.settings = settings;
+            this.previousSettings = this._clone(settings);
 
             return settings;
         }).catch(err => {
             console.error('No settings file created.', err);
-            return bridge.defaultSettings;
+            return this.defaultSettings;
         });
     }
 
@@ -63,14 +66,13 @@ class SettingsService {
             return;
         }
 
-        let bridge = this;
         storage.set(this.FILENAME, settings).then(() => {
-            bridge.settings = settings;
-            bridge.previousSettings = this._clone(settings);
+            this.settings = settings;
+            this.previousSettings = this._clone(settings);
         });
     }
 
-    isIdentical(settings) {
+    isIdentical(settings): boolean {
         return JSON.stringify(settings) === JSON.stringify(this.previousSettings);
     }
 

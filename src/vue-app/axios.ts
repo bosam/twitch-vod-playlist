@@ -4,7 +4,6 @@ import SettingsService from './services/settings.service';
 
 let settings;
 SettingsService.load().then(settingsObj => {
-    console.log('Loaded with success', settingsObj);
     settings = settingsObj;
 });
 
@@ -25,7 +24,6 @@ const askToken = function(originalRequest) {
 };
 
 axios.interceptors.request.use(config => {
-    console.log(config);
     if (accessToken) {
         config.headers['Authorization'] = 'Bearer ' + accessToken;
     }

@@ -1,80 +1,116 @@
 <template>
-    <div>
-        <b-form @submit.stop.prevent="formSubmit">
-            <b-form-group
-                class="mb-0"
-                label="Client Id"
-                label-for="input-client-id">
-                <b-form-input
-                    id="input-client-id"
-                    v-model="settings.credentials.client_id"
-                    placeholder="Twitch Client Id"></b-form-input>
-            </b-form-group>
-            <b-form-group
-                class="mb-0"
-                label="Client Secret"
-                label-for="input-client-secret">
-                <b-form-input
-                    id="input-client-secret"
-                    v-model="settings.credentials.client_secret"
-                    placeholder="Twitch Client Secret"></b-form-input>
-            </b-form-group>
+  <div>
+    <b-form @submit.stop.prevent="formSubmit">
+      <b-form-group
+        class="mb-0"
+        label="Client Id"
+        label-for="input-client-id"
+      >
+        <b-form-input
+          id="input-client-id"
+          v-model="settings.credentials.client_id"
+          placeholder="Twitch Client Id"
+        />
+      </b-form-group>
+      <b-form-group
+        class="mb-0"
+        label="Client Secret"
+        label-for="input-client-secret"
+      >
+        <b-form-input
+          id="input-client-secret"
+          v-model="settings.credentials.client_secret"
+          placeholder="Twitch Client Secret"
+        />
+      </b-form-group>
 
-            <b-form-group
-                class="mb-0"
-                label="Script location"
-                label-for="input-paths-script">
-                <b-form-textarea
-                    rows="5"
-                    id="input-paths-script"
-                    v-model="settings.paths.script"
-                    placeholder="Script location"></b-form-textarea>
-            </b-form-group>
-            <b-form-group
-                class="mb-0">
-                <b-table small
-                         :items="settings.channels"
-                         :fields="fields"
-                         primary-key="id"
-                         caption-top>
-                    <template v-slot:table-caption>
-                        You can add or edit the current stored channels.
-                        <b-button @click="addChannelRow" size="sm" variant="primary" class="float-right"><font-awesome-icon icon="plus"></font-awesome-icon> Add channel</b-button>
-                    </template>
-                    <template v-slot:cell(channel)="data">
-                        <b-form-input type="text" :value="data.item.channel" @input="(val) => changed('channel', data.item, val)" />
-                    </template>
-                    <template v-slot:cell(label)="data">
-                        <b-form-input type="text" :value="data.item.label" @input="(val) => changed('label', data.item, val)" />
-                    </template>
-                    <template v-slot:cell(Remove)="data">
-                        <div class="text-center">
-                            <b-button :disabled="settings.channels.length === 1" variant="danger" title="Remove" @click="removeChannelRow(data.item.id)"><font-awesome-icon icon="trash"></font-awesome-icon></b-button>
-                        </div>
-                    </template>
-                </b-table>
-            </b-form-group>
+      <b-form-group
+        class="mb-0"
+        label="Script location"
+        label-for="input-paths-script"
+      >
+        <b-form-textarea
+          id="input-paths-script"
+          v-model="settings.paths.script"
+          rows="5"
+          placeholder="Script location"
+        />
+      </b-form-group>
+      <b-form-group
+        class="mb-0"
+      >
+        <b-table
+          small
+          :items="settings.channels"
+          :fields="fields"
+          primary-key="id"
+          caption-top
+        >
+          <template #table-caption>
+            You can add or edit the current stored channels.
+            <b-button
+              size="sm"
+              variant="primary"
+              class="float-right"
+              @click="addChannelRow"
+            >
+              <font-awesome-icon icon="plus" /> Add channel
+            </b-button>
+          </template>
+          <template #cell(channel)="data">
+            <b-form-input
+              type="text"
+              :value="data.item.channel"
+              @input="(val) => changed('channel', data.item, val)"
+            />
+          </template>
+          <template #cell(label)="data">
+            <b-form-input
+              type="text"
+              :value="data.item.label"
+              @input="(val) => changed('label', data.item, val)"
+            />
+          </template>
+          <template #cell(Remove)="data">
+            <div class="text-center">
+              <b-button
+                :disabled="settings.channels.length === 1"
+                variant="danger"
+                title="Remove"
+                @click="removeChannelRow(data.item.id)"
+              >
+                <font-awesome-icon icon="trash" />
+              </b-button>
+            </div>
+          </template>
+        </b-table>
+      </b-form-group>
 
-            <b-button variant="success" type="submit" size="sm" :disabled="checkValidity"><font-awesome-icon icon="save"></font-awesome-icon> Save</b-button>
-        </b-form>
-        <b-alert variant="success"
-                 :show="showSuccess"
-        ><font-awesome-icon icon="check-circle"></font-awesome-icon> Successfully saved.</b-alert>
-    </div>
+      <b-button
+        variant="success"
+        type="submit"
+        size="sm"
+        :disabled="checkValidity"
+      >
+        <font-awesome-icon icon="save" /> Save
+      </b-button>
+    </b-form>
+    <b-alert
+      variant="success"
+      :show="showSuccess"
+    >
+      <font-awesome-icon icon="check-circle" /> Successfully saved.
+    </b-alert>
+  </div>
 </template>
 
-<script>
+<script type="ts">
 /* eslint-disable indent */
+    import Vue from 'vue';
     import SettingsService from '../services/settings.service';
 
-    export default {
+    export default Vue.extend({
         name: 'Settings',
-        beforeMount() {
-            SettingsService.load().then(settings => {
-                console.log('Loaded with success', settings);
-                this.settings = settings;
-            });
-        },
         data() {
             return {
                 settings: SettingsService.settings,
@@ -83,6 +119,36 @@
                 dismissCountDown: 0,
                 showSuccess: false
             };
+        },
+        computed: {
+            checkValidity() {
+                let sameSettings = SettingsService.isIdentical(this.settings);
+                if (sameSettings) {
+                    return true;
+                }
+
+                let isDisabled = false;
+                this.settings.channels.forEach(item => {
+                    if ('' === item.channel ||
+                        '' === item.label) {
+                        isDisabled = true;
+                        return false;
+                    }
+                });
+                return isDisabled;
+            }
+        },
+        watch: {
+            showSuccess() {
+                setTimeout(() => {
+                    this.showSuccess = false;
+                }, 3000);
+            }
+        },
+        beforeMount() {
+            SettingsService.load().then(settings => {
+                this.settings = settings;
+            });
         },
         methods: {
             formSubmit() {
@@ -106,33 +172,8 @@
                 const index = this.settings.channels.findIndex(currentItem => currentItem.id === item.id);
                 this.settings.channels[index][key] = val;
             }
-        },
-        watch: {
-            showSuccess() {
-                setTimeout(() => {
-                    this.showSuccess = false;
-                }, 3000);
-            }
-        },
-        computed: {
-            checkValidity() {
-                let sameSettings = SettingsService.isIdentical(this.settings);
-                if (sameSettings) {
-                    return true;
-                }
-
-                let isDisabled = false;
-                this.settings.channels.forEach(item => {
-                    if ('' === item.channel ||
-                        '' === item.label) {
-                        isDisabled = true;
-                        return false;
-                    }
-                });
-                return isDisabled;
-            }
         }
-    };
+    });
 </script>
 
 <style>

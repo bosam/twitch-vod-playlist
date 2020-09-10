@@ -1,6 +1,6 @@
 import axios from '../axios';
 
-let channelsId = {};
+const channelsId = {};
 
 class FetchService {
     fetchChannelId(channelName) {
