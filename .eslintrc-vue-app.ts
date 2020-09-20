@@ -1,5 +1,7 @@
 import {Linter} from 'eslint';
 
+const errorOrOff: Linter.RuleEntry = 'production' === process.env.NODE_ENV ? 'error' : 'off';
+
 const config: Linter.Config = {
     root: true,
     parser: 'vue-eslint-parser',
@@ -28,7 +30,7 @@ const config: Linter.Config = {
     rules: {
         'vue/require-prop-types': 'off',
         'no-console': 'off',
-        'no-debugger': 'production' === process.env.NODE_ENV ? 'error' : 'off',
+        'no-debugger': errorOrOff,
         'indent': [
             'error',
             4

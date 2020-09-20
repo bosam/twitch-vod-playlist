@@ -2,10 +2,15 @@ import { resolve } from 'path';
 import VueLoaderPlugin from 'vue-loader/lib/plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import * as webpack from 'webpack';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import { Configuration as WebpackConfiguration } from 'webpack';
+import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 
-const config: webpack.Configuration = {
+interface Configuration extends WebpackConfiguration {
+    devServer?: WebpackDevServerConfiguration;
+}
+
+const config: Configuration = {
     mode: (process.env.NODE_ENV as 'development' | 'production' | 'none'),
 	target: 'electron-renderer',
 	entry: resolve(__dirname, 'src/vue-app/main.ts'),

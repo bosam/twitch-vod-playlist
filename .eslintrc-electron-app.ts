@@ -1,5 +1,7 @@
 import {Linter} from 'eslint';
 
+const errorOrOff: Linter.RuleEntry = 'production' === process.env.NODE_ENV ? 'error' : 'off';
+
 const config: Linter.Config = {
     env: {
         commonjs: true,
@@ -16,8 +18,8 @@ const config: Linter.Config = {
         parser: 'babel-eslint'
     },
     rules: {
-        'no-console': 'production' === process.env.NODE_ENV ? 'error' : 'off',
-        'no-debugger': 'production' === process.env.NODE_ENV ? 'error' : 'off',
+        'no-console': errorOrOff,
+        'no-debugger': errorOrOff,
         'indent': [
             'error',
             4
