@@ -152,9 +152,9 @@
         },
         methods: {
             formSubmit() {
-                console.log(this.settings);
-                SettingsService.save(this.settings);
-                this.showSuccess = true;
+                SettingsService.save(this.settings).then(() => {
+                  this.showSuccess = true;
+                });
             },
             addChannelRow() {
                 let prototype = Object.keys(this.settings.channels[0]).reduce((accObj, parseObj) => {

@@ -54,57 +54,57 @@
 
 <script type="ts">
 /* eslint-disable indent */
-    import Vue from 'vue';
-    import SettingsService from '../services/settings.service';
-    import FetchService from '../services/fetch.service';
-    import VideoList from './VideoList.vue';
+import Vue from 'vue';
+import SettingsService from '../services/settings.service';
+import FetchService from '../services/fetch.service';
+import VideoList from './VideoList.vue';
 
-    export default Vue.extend({
-        name: 'Search',
-        components: {
-            VideoList
-        },
-        data: () => {
-            return {
-                videoList: {},
-                channelName: SettingsService.settings.channels[0].channel,
-                countModel: 25,
-                options: SettingsService.settings.channels
-            };
-        },
-        computed: {
-            countList() {
-                return [10, 25, 50];
-            },
-            formSubmittable() {
-                return '' !== this.channelName;
-            }
-        },
-        beforeMount() {
-            SettingsService.load().then(settings => {
-                this.channelName = settings.channels[0].channel;
-                this.options = settings.channels;
-            });
-        },
-        mounted() {
-            this.$root.$on('clearing-fields', () => {
-                console.info('Clearing up fields for global search');
-                this.channelName = '';
-                this.videoList = {};
-            });
-        },
-        methods: {
-            formSubmit() {
-                if ('' === this.channelName) {
-                    return;
-                }
-
-                FetchService.search(this.channelName, this.count).then(response => {
-                    this.videoList = response.data.data;
-                });
-            }
-        }
+export default Vue.extend({
+  name: 'Search',
+  components: {
+    VideoList
+  },
+  data: () => {
+    return {
+      videoList: {},
+      channelName: SettingsService.settings.channels[0].channel,
+      countModel: 25,
+      options: SettingsService.settings.channels
+    };
+  },
+  computed: {
+    countList() {
+      return [10, 25, 50];
+    },
+    formSubmittable() {
+      return '' !== this.channelName;
+    }
+  },
+  beforeMount() {
+    SettingsService.load().then(settings => {
+      this.channelName = settings.channels[0].channel;
+      this.options = settings.channels;
     });
+  },
+  mounted() {
+    this.$root.$on('clearing-fields', () => {
+      console.info('Clearing up fields for global search');
+      this.channelName = '';
+      this.videoList = {};
+    });
+  },
+  methods: {
+    formSubmit() {
+      if ('' === this.channelName) {
+        return;
+      }
+
+      FetchService.search(this.channelName, this.count).then(response => {
+        this.videoList = response.data.data;
+      });
+    }
+  }
+});
 </script>
 
 <style>

@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "npx cross-env NODE_ENV=development npm run watch:vue-app",
 		"start": "npx cross-env NODE_ENV=development npm run build:electron-app && npm run start:electron-app",
+		"dev+start": "concurrently --kill-others-on-fail \"npm run dev\" \"npm run start\"",
 		"start:electron-app": "npx electron . --disable-gpu",
 		"compile:config-files": "npx tsc .eslintrc-electron-app.ts .eslintrc-vue-app.ts --moduleResolution node --t es5 --m commonjs",
 		"build": "npx cross-env NODE_ENV=production npm run build:electron-app && npx cross-env NODE_ENV=production npm run build:vue-app",
@@ -66,6 +67,7 @@
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.0.6",
 		"clean-webpack-plugin": "^3.0.0",
+		"concurrently": "^5.3.0",
 		"cross-env": "^7.0.2",
 		"css-loader": "^3.6.0",
 		"electron": "^8.5.2",
@@ -92,16 +94,5 @@
 		"webpack-cli": "^3.3.11",
 		"webpack-dev-server": "^3.10.3",
 		"webpack-shell-plugin": "^0.5.0"
-	},
-	"babel": {
-		"presets": [
-			"@babel/preset-env",
-			"@babel/preset-react",
-			"@babel/preset-typescript"
-		],
-		"plugins": [
-			"@babel/plugin-transform-runtime",
-			"@babel/plugin-proposal-class-properties"
-		]
 	}
 }

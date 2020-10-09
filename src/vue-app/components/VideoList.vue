@@ -20,7 +20,7 @@
         <a
           :href="video.url"
           @click="spawnMedia(video.url, $event)"
-        >{{ parseTitle(video.title) }}</a>
+        >{{ parseTitle(video) }}</a>
         <span class="small">( {{ video.duration }} )</span>
       </li>
     </ul>
@@ -29,49 +29,50 @@
 
 <script type="ts">
 /* eslint-disable indent */
-    import Vue from 'vue';
-    import moment from 'moment-timezone';
-    import SpawnService from '../services/spawn.service';
+import Vue from 'vue';
+import moment from 'moment-timezone';
+import SpawnService from '../services/spawn.service';
 
-    export default Vue.extend({
-        name: 'VideoList',
-        props: [
-            'list',
-            'channelName'
-        ],
-        data: () => {
-            return {
-                channelNameProcessed: ''
-            };
-        },
-        watch: {
-            list: function() {
-                this.channelNameProcessed = this.channelName;
-            },
-        },
-        methods: {
-            parseTitle(title) {
-                if ('bibi300' === this.channelName &&
-                    -1 !== title.indexOf('!')) {
-                    title = title.split('!')[0];
-                }
+export default Vue.extend({
+  name: 'VideoList',
+  props: [
+    'list',
+    'channelName'
+  ],
+  data: () => {
+    return {
+      channelNameProcessed: ''
+    };
+  },
+  watch: {
+    list: function () {
+      this.channelNameProcessed = this.channelName;
+    },
+  },
+  methods: {
+    parseTitle(video) {
+      let title = video.title;
+      if ('Bibi300' === video.user_name &&
+        -1 !== title.indexOf('|')) {
+        title = title.split('|')[1];
+      }
 
-                return title;
-            },
-            createdAtRaw(createdAt) {
-                createdAt = moment(createdAt).tz('America/Vancouver');
-                return createdAt.format('LLLL');
-            },
-            createdAtFromNow(createdAt) {
-                createdAt = moment(createdAt).tz('America/Vancouver');
-                return createdAt.fromNow(true);
-            },
-            spawnMedia(url, e) {
-                e.preventDefault();
-                SpawnService.spawnMedia(url);
-            }
-        }
-    });
+      return title;
+    },
+    createdAtRaw(createdAt) {
+      createdAt = moment(createdAt).tz('America/Vancouver');
+      return createdAt.format('LLLL');
+    },
+    createdAtFromNow(createdAt) {
+      createdAt = moment(createdAt).tz('America/Vancouver');
+      return createdAt.fromNow(true);
+    },
+    spawnMedia(url, e) {
+      e.preventDefault();
+      SpawnService.spawnMedia(url);
+    }
+  }
+});
 </script>
 
 <style>

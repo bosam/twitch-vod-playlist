@@ -1,10 +1,16 @@
 import storage from 'electron-storage';
 
+type Settings = {
+    channels: { channel: string; id: number; label: string }[];
+    credentials: { client_secret: string; client_id: string };
+    paths: { script: string }
+}
+
 class SettingsService {
-    settings: unknown;
-    previousSettings: unknown;
+    settings: Settings;
+    previousSettings: Settings;
     HAS_LOADED: boolean;
-    defaultSettings: { channels: { channel: string; id: number; label: string }[]; credentials: { client_secret: string; client_id: string }; paths: { script: string } };
+    defaultSettings: Settings;
     private FILENAME = 'settings';
 
     constructor() {
@@ -21,7 +27,7 @@ class SettingsService {
             ]
         };
         this.settings = this._clone(this.defaultSettings);
-        this.previousSettings = {};
+        this.previousSettings = {} as Settings;
         this.HAS_LOADED = false;
     }
 
@@ -60,19 +66,19 @@ class SettingsService {
         });
     }
 
-    save(settings) {
+    save(settings: Settings) {
         if (this.isIdentical(settings)) {
             console.info('Abort saving identical settings.');
             return;
         }
 
-        storage.set(this.FILENAME, settings).then(() => {
+        return storage.set(this.FILENAME, settings).then(() => {
             this.settings = settings;
             this.previousSettings = this._clone(settings);
         });
     }
 
-    isIdentical(settings): boolean {
+    isIdentical(settings: Settings): boolean {
         return JSON.stringify(settings) === JSON.stringify(this.previousSettings);
     }
 
