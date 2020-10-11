@@ -30,8 +30,11 @@
 <script type="ts">
 /* eslint-disable indent */
 import Vue from 'vue';
-import moment from 'moment-timezone';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { format, utcToZonedTime } from 'date-fns-tz';
 import SpawnService from '../services/spawn.service';
+
+const currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export default Vue.extend({
   name: 'VideoList',
@@ -60,12 +63,12 @@ export default Vue.extend({
       return title;
     },
     createdAtRaw(createdAt) {
-      createdAt = moment(createdAt).tz('America/Vancouver');
-      return createdAt.format('LLLL');
+      createdAt = utcToZonedTime(createdAt, currentTimezone);
+      return format(createdAt, 'yyyy-MM-dd HH:mm:ss zzz');
     },
     createdAtFromNow(createdAt) {
-      createdAt = moment(createdAt).tz('America/Vancouver');
-      return createdAt.fromNow(true);
+      createdAt = utcToZonedTime(createdAt, currentTimezone);
+      return formatDistanceToNow(createdAt, { addSuffix: true });
     },
     spawnMedia(url, e) {
       e.preventDefault();
