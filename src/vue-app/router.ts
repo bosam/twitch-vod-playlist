@@ -6,17 +6,17 @@ import Settings from './components/Settings.vue';
 Vue.use(Router);
 
 export const router = new Router({
-    mode: 'hash',
-    routes: [
-        {
-            name: 'playlist',
-            path: '/',
-            component: Playlist,
-        },
-        {
-            name: 'settings',
-            path: '/settings',
-            component: Settings
-        }
-    ]
+  mode: 'hash',
+  routes: [
+    {
+      name: 'playlist',
+      path: '/',
+      component: Playlist,
+    },
+    {
+      name: 'settings',
+      path: '/settings',
+      component: Settings
+    }
+  ]
 });

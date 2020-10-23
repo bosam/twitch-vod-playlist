@@ -9,6 +9,8 @@ Twitch VOD Playlist is a very simple Electron app made to list a streamer's vide
 This project uses as base [Electron-vue-boilerplate](https://github.com/oliverfindl/electron-vue-boilerplate).
 It runs VueJS within Electron.
 
+It started as a plain Javascript project but was later converted to a TypeScript project for both electron and the app.
+
 Please keep in mind that this project is very young and needs refinement. I mainly created it for my own enjoyment.
 
 **Why?**
@@ -22,16 +24,14 @@ The idea behind the application is to allow watching VOD streams with a media pl
 The application only lists all the latest videos from a user channel. Nodejs allows for spawning a child process that can be anything.
 Coupled with [Streamlink](https://github.com/streamlink/streamlink), you can easily open any videos in your favorite media player.
 
-I currently am using a script that calls for streamlink and open Media Player Classic.
+I am currently using a script that calls for streamlink and open Media Player Classic.
 
 ```
 #!/bin/bash
-"LOCATION_TO_STREAMLINK/streamlink.bat" --player-passthrough hls --player "LOCATION_TO_MEDIA_PLAYER_CLASSIC/mpc.exe" $1 $2 
+"LOCATION_TO_STREAMLINK/streamlink.bat" --player-passthrough hls --player "LOCATION_TO_MEDIA_PLAYER_CLASSIC/mpc.exe" --default-stream="480p, best" $1  
 ```
 
 **$1** being the url of the video
-
-**$2** being the quality wanted (best) -- It can be forced
 
 **Application Setup**
 --
@@ -52,7 +52,7 @@ Next is setting up a path to a script.
 PATH_TO_MY_SCRIPT.bat
 ```
 
-Remember 2 arguments will be passed to that script **$1** being the url location of the video and **$2** being the quality requested.
+One argument being the url of the VOD will be passed to that script.
 
 **How to Contribute**
 ---

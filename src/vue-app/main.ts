@@ -15,7 +15,7 @@ Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
 new Vue({
-    router,
-    components: { App },
-    template: '<app />'
+  router,
+  components: { App },
+  template: '<app />'
 }).$mount('#app');
