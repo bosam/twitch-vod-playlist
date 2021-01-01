@@ -40,7 +40,7 @@ axios.interceptors.response.use((response) => {
 }, function(error) {
   const originalRequest = error.config;
   if (401 === error.response.status &&
-        !originalRequest._retry) {
+    !originalRequest._retry) {
     console.info('About to retry...');
     originalRequest._retry = true;
     return askToken(originalRequest);

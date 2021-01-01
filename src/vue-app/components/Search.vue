@@ -22,32 +22,33 @@
       </div>
       <div class="form-group">
         <label class="text-muted">results for</label>
-        <select
-          v-model="channelName"
-          class="form-control form-control-sm mx-sm-3"
-        >
-          <option
-            v-for="channelItem in options"
-            :key="channelItem.channel"
-            :value="channelItem.channel"
-          >
-            {{ channelItem.label }}
-          </option>
-        </select>
+        <b-form-select
+          v-model="channelInternalId"
+          :options="options"
+          size="sm"
+          class="mx-sm-3"
+          value-field="internalId"
+          text-field="label"
+        />
       </div>
 
       <button
         type="submit"
         class="btn btn-primary btn-sm my-1"
-        :disabled="!formSubmittable"
+        :disabled="isSearching"
       >
+        <font-awesome-icon
+          icon="spinner"
+          spin
+          :hidden="!isSearching"
+        />
         Go
       </button>
     </form>
 
     <video-list
       :list="videoList"
-      :channel-name="channelName"
+      :channel-name="channel.channel"
     />
   </div>
 </template>
@@ -66,8 +67,10 @@ export default Vue.extend({
   },
   data: () => {
     return {
+      isSearching: false,
       videoList: {},
-      channelName: SettingsService.settings.channels[0].channel,
+      channelInternalId: SettingsService.settings.channels[0].internalId,
+      channel: SettingsService.settings.channels[0],
       countModel: 25,
       options: SettingsService.settings.channels
     };
@@ -76,31 +79,33 @@ export default Vue.extend({
     countList() {
       return [10, 25, 50];
     },
-    formSubmittable() {
-      return '' !== this.channelName;
+  },
+  watch: {
+    channelInternalId() {
+      SettingsService.load().then(settings => {
+        this.channel = settings.channels.find(channel => channel.internalId === this.channelInternalId);
+      });
     }
   },
   beforeMount() {
     SettingsService.load().then(settings => {
-      this.channelName = settings.channels[0].channel;
+      this.channel = settings.channels[0];
       this.options = settings.channels;
     });
   },
   mounted() {
     this.$root.$on('clearing-fields', () => {
       console.info('Clearing up fields for global search');
-      this.channelName = '';
       this.videoList = {};
     });
   },
   methods: {
     formSubmit() {
-      if ('' === this.channelName) {
-        return;
-      }
-
-      FetchService.search(this.channelName, this.count).then(response => {
+      this.isSearching = true;
+      FetchService.loadVideoList(this.channel, this.count).then(response => {
         this.videoList = response.data.data;
+      }).finally(() => {
+        this.isSearching = false;
       });
     }
   }

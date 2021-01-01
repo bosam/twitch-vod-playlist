@@ -1,7 +1,7 @@
 import storage from 'electron-storage';
 
 type Settings = {
-    channels: { channel: string; id: number; label: string }[];
+    channels: Types.Channel[];
     credentials: { client_secret: string; client_id: string };
     paths: { script: string }
 }
@@ -23,7 +23,7 @@ class SettingsService {
           'script': ''
         },
         'channels': [
-          { id: 0, channel: 'gamesdonequick', label: 'GamesDoneQuick' }
+          { internalId: 0, channelId: 22510310, channel: 'gamesdonequick', label: 'GamesDoneQuick' }
         ]
       };
       this.settings = this._clone(this.defaultSettings);

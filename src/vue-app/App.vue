@@ -14,6 +14,14 @@
         > Playlist
       </b-nav-item>
       <b-nav-item
+        :to="{ name: 'channels' }"
+        exact
+        exact-active-class="active"
+      >
+        <font-awesome-icon icon="list" />
+        Channels
+      </b-nav-item>
+      <b-nav-item
         :to="{ name: 'settings' }"
         exact
         exact-active-class="active"

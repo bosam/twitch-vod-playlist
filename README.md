@@ -6,6 +6,8 @@
 
 Twitch VOD Playlist is a very simple Electron app made to list a streamer's videos-on-demand and call a script with the url's location as its first parameter.
 
+<div align="center"><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/electron.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/eslint.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/javascript.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/node-sass.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/typescript-icon.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/vue.svg"/><img width="55" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/webpack.svg"/></div>
+
 This project uses as base [Electron-vue-boilerplate](https://github.com/oliverfindl/electron-vue-boilerplate).
 It runs VueJS within Electron.
 
@@ -53,6 +55,15 @@ PATH_TO_MY_SCRIPT.bat
 ```
 
 One argument being the url of the VOD will be passed to that script.
+
+**Screenshots**
+---
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/bosam/twitch-vod-playlist/master/assets/playlist.png" alt="Playlist" />
+<img src="https://raw.githubusercontent.com/bosam/twitch-vod-playlist/master/assets/channels.png" alt="Channels" />
+<img src="https://raw.githubusercontent.com/bosam/twitch-vod-playlist/master/assets/settings.png" alt="Settings" />
+</p>
 
 **How to Contribute**
 ---
