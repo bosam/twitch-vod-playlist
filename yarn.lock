@@ -7,6 +7,18 @@
   resolved "https://registry.yarnpkg.com/7zip-bin/-/7zip-bin-5.0.3.tgz#bc5b5532ecafd923a61f2fb097e3b108c0106a3f"
   integrity sha512-GLyWIFBbGvpKPGo55JyRZAo4lVbnBiD52cKlw/0Vt+wnmKvWJkpZvsjVoaIolyBXDeAQKSicRtqFNPem9w0WYA==
 
+"@ahmadnassri/error@^1.1.0":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@ahmadnassri/error/-/error-1.1.2.tgz#5721787600798fb308b0bcf3040c9cbd5181ea0c"
+  integrity sha512-f2/9P07U3wsOyCR3/qNskIVTwZC0B/O9Xmjf/3Jqwexp2VQ5MsekiN/n6R7/SiQ+7adM9Z4hDc0j9oBI0+l48Q==
+
+"@ahmadnassri/spawn-promise@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@ahmadnassri/spawn-promise/-/spawn-promise-1.2.0.tgz#9a706c2995eca185b871b3a817a26e79309f4795"
+  integrity sha512-QvFuwrlKLGyMuQj7ohCLXtrVrDAQ7FyWjDX9f3WxpD3pGPGFzCafG/ZGIVWB6wNLwerZo+E5GplgQBqoYnC61g==
+  dependencies:
+    "@ahmadnassri/error" "^1.1.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
