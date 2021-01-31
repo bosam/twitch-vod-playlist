@@ -90,6 +90,7 @@ export default Vue.extend({
   beforeMount() {
     SettingsService.load().then(settings => {
       this.channel = settings.channels[0];
+      this.channelInternalId = this.channel.internalId;
       this.options = settings.channels;
     });
   },

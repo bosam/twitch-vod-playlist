@@ -24,7 +24,8 @@ async function createWindow() {
     height: mainWindowState.height,
     icon: resolve(__dirname, 'icon.png'),
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true,
     }
   });
 

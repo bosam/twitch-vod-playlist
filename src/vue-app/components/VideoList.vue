@@ -80,18 +80,24 @@
       spawnMedia(url, e) {
         e.preventDefault();
         this.spawningVideo = true;
-        // Artificial timeout - since spawning won't return the buffer until the process is closed
-        setTimeout(() => { this.spawningVideo = false; }, 2500);
-        SpawnService.spawnMedia(url)
-          .catch(error => {
-            this.$bvToast.toast(error.stdout.toString(), {
+        SpawnService.spawnChildProcess(url).then(process => {
+          let timeout;
+          process.stdout.on('data', (data) => {
+            console.info(data.toString());
+            // Disable loader after 1 second of non-activity
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+              this.spawningVideo = false;
+            }, 1000);
+          });
+          process.stderr.on('data', (data) => {
+            this.$bvToast.toast(data.toString(), {
               title: 'Error',
               variant: 'danger',
               solid: false
             });
-        }).finally(() => {
-          // In case it returns early due to an error
-          this.spawningVideo = false;
+            this.spawningVideo = false;
+          });
         });
       },
       copyToClipboard(url) {
