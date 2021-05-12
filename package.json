@@ -81,7 +81,7 @@
 		"html-webpack-plugin": "^4",
 		"ncp": "^2.0.0",
 		"node-sass": "^4.13.1",
-		"postcss": "^7.0.32",
+		"postcss": "^8.2.10",
 		"postcss-loader": "^3.0.0",
 		"postcss-scss": "^2.1.1",
 		"sass-loader": "^8.0.2",
