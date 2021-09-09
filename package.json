@@ -45,6 +45,7 @@
 		"bootstrap-vue": "^2.15.0",
 		"date-fns": "^2.16.1",
 		"date-fns-tz": "^1.0.12",
+		"dotenv-flow": "^3.2.0",
 		"electron-storage": "^1.0.7",
 		"electron-window-state": "^5.0.3",
 		"qs": "^6.9.4",

@@ -6,3 +6,4 @@ dist
 yarn-error.log
 # hide eslintrc js config file
 .eslintrc-*.js
+.env.local

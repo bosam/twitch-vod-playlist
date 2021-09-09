@@ -3,11 +3,13 @@ import { app, BrowserWindow } from 'electron';
 import { resolve } from 'path';
 import { format } from 'url';
 import windowStateKeeper from 'electron-window-state';
+import 'dotenv-flow/config';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let isDev = 'development' === process.env.NODE_ENV;
+const devServerPort = process.env.DEV_SERVER_PORT || 8080;
 
 async function createWindow() {
   // Load the previous state with fallback to defaults
@@ -38,7 +40,7 @@ async function createWindow() {
     pathname: 'index.html',
     protocol: 'http',
     slashes: true,
-    port: 8080
+    port: +devServerPort
   }) : format({
     pathname: resolve(__dirname, '..', 'vue-app/index.html'),
     protocol: 'file',

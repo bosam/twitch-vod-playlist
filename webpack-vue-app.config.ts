@@ -5,10 +5,13 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
 import { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import 'dotenv-flow/config';
 
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
+
+const devServerHotPort = process.env.DEV_SERVER_HOT_PORT || 8081;
 
 const config: Configuration = {
   mode: (process.env.NODE_ENV as 'development' | 'production' | 'none'),
@@ -25,6 +28,7 @@ const config: Configuration = {
     __dirname: true
   },
   devServer: {
+    port: +devServerHotPort,
     historyApiFallback: true,
     overlay: {
       errors: true,
