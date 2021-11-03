@@ -11,7 +11,7 @@ interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 
-const devServerHotPort = process.env.DEV_SERVER_HOT_PORT || 8081;
+const devServerHotPort = process.env.DEV_SERVER_PORT || 8080;
 
 const config: Configuration = {
   mode: (process.env.NODE_ENV as 'development' | 'production' | 'none'),
