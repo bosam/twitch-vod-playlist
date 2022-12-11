@@ -48,7 +48,7 @@
 		"dotenv-flow": "^3.2.0",
 		"electron-storage": "^1.0.7",
 		"electron-window-state": "^5.0.3",
-		"qs": "^6.9.4",
+		"qs": "^6.10.3",
 		"vue": "^2.6.11",
 		"vue-router": "^3.3.4",
 		"vuedraggable": "^2.24.3"
